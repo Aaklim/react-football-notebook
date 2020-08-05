@@ -1,0 +1,15 @@
+
+.main{
+    background-image: url('../../../img/bench-transp.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height:200px;
+    // overflow-x: scroll;
+     .players{
+         display:flex;
+         justify-content: space-between;
+         padding-top: 12%;
+
+     }
+}

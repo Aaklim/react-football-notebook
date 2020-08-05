@@ -1,0 +1,17 @@
+
+.main{
+    height: 460px;
+    background-image: url('../../../img/notebook-trasp.png');
+    background-repeat: no-repeat;
+    background-size:contain;
+    position: relative;
+    ol{
+        position: absolute;
+        top:12%;
+        padding-left:15%;
+        width:70%;
+        height:75%;
+        overflow-y:scroll;
+        overflow-x: hidden;
+    }
+}
