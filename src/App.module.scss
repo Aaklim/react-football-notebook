@@ -1,8 +1,50 @@
-$mainColor:rgb(163,252,192);
-.main{
-    display:flex;
-    // background-color: $mainColor;
-    background-image:url('./img/grass-PNG.png');
-    width:600px;
-    margin:0 auto;
+$borderColor: rgb(41, 177, 86);
+$backgroundColor: rgb(194, 188, 188);
+
+.wrapper {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: $backgroundColor;
+  //
+   overflow:hidden;
 }
+.main {
+  display: flex;
+  -webkit-box-flex: flex;
+
+  background-image: url('./img/grass-PNG.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width:300px;
+  height:100%;
+  //
+  overflow: auto;
+  flex-direction: column;
+  margin: 0 auto;
+
+
+  // width: 600px;
+  // height: 620px;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  border: 10px ridge $borderColor;
+}
+// @media screen and (max-device-width: 650px) {
+//   .main {
+//     flex-direction: column;
+//     width: 300px;
+//     height: 100%;
+//     position: static;
+//     transform: none;
+//     overflow-y: scroll;
+//     overflow-x: hidden;
+//     scrollbar-width: none;
+
+//     margin: 0 auto;
+//   }
+// }

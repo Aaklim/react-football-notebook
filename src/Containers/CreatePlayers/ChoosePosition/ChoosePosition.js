@@ -6,14 +6,16 @@ import PlayerNotebook from '../../../Components/PlayerNotebook/PlayerNotebook'
 
 
 const ChoosePosition = () => {
-  const { state, formHandler, createOption } = useContext(Context);
+  const { state, formHandler, createOption,formButton } = useContext(Context);
   const playersPosition = state.playersPosition;
   const players = state.players.map((player) => (
     <PlayerNotebook
+      key={player}
       name={player}
       formHandler={formHandler}
       playersPosition={playersPosition}
       createOption={createOption}
+      formButton={formButton}
       state={state}
     />
   ));

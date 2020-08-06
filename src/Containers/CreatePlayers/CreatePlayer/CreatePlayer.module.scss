@@ -1,4 +1,4 @@
-$mainColor:rgb(163,252,192);
+$inputColor:rgb(41, 177, 86);
 .main{
     text-align: center;
     // background-color: $mainColor;
@@ -8,6 +8,9 @@ $mainColor:rgb(163,252,192);
         margin-top: 5%;
         font-weight: bolder;
 
+    }
+    input{
+        border:5px ridge $inputColor
     }
 
 }

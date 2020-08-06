@@ -4,9 +4,9 @@ import classes from './BenchPlayer.module.scss'
 const BenchPlayer = ({ name }) => {
   return (
     <div className={classes.main}>
+      <span>{name}</span><br />
       <img src='benchplayer.png' alt='Player' />
-      <br />
-      <span>{name}</span>
+
     </div>
   );
 };

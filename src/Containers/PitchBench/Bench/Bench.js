@@ -4,7 +4,7 @@ import BenchPlayer from '../../../Components/BenchPlayer/BenchPlayer'
 
 
 const Bench =({subPlayers})=>{
-   const players=subPlayers.map(obj=><BenchPlayer name={obj.name}/>)
+   const players=subPlayers.map(obj=><BenchPlayer key={obj.name} name={obj.name}/>)
     return (
         <div className={classes.main}>
             <div className={classes.players}>

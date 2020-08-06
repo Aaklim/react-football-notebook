@@ -5,7 +5,7 @@ import PlayerPitch from '../../../Components/PlayerPitch/PlayerPitch'
 
 const Pitch = ({ pitchPlayers }) => {
   const namePosition = pitchPlayers.map((obj) => (
-    <PlayerPitch name={obj.name} position={obj.position} />
+    <PlayerPitch key={obj.name} name={obj.name} position={obj.position} />
   ));
 
   console.log('PITCH', namePosition);

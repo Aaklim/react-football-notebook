@@ -1,17 +1,15 @@
 import React from 'react'
 import classes from './PlayerPitch.module.scss'
 
-const PlayerPitch =({name,position})=>{
+const PlayerPitch = ({ name, position }) => {
+  let imgSrc = position === 'GK' ? 'playerGK.png' : 'player.png';
 
-    console.log(position)
-
-    return (
-        <div className={[classes.main,classes[position]].join(' ')}>
-            <img src="player.png" alt="Player"/><br/>
-            <span>{name}</span>
-
-        </div>
-    )
-
-}
+  return (
+    <div className={[classes.main, classes[position]].join(' ')}>
+      <img src={imgSrc} alt='Player' />
+      <br />
+      <span>{name}</span>
+    </div>
+  );
+};
 export default PlayerPitch;
