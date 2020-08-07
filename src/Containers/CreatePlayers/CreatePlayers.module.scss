@@ -1,16 +1,6 @@
-$mainColor:rgb(163,252,192);
 
-.main{
-    display:flex;
-    flex-direction: column;
-    width:300px;
-    // background-color: $mainColor;
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }
-// @media screen and (max-device-width: 450px) {
-//     .main {
-
-//         width:90%;
-//         height:100vh;
-//         margin-bottom: 5%;
-//     }
-// }

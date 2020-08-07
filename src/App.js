@@ -9,8 +9,8 @@ export const Context=createContext()
 class App extends Component {
   state = {
     inputValue: '',
-    namePosition: [],
-    players: Test.players,
+    namePosition:Test.namePosition,
+    players:Test.players,
     playersPosition: ['RF', 'LF', 'RD', 'LD', 'GK', 'SUB'],
   };
   buttonHandler = (e) => {
