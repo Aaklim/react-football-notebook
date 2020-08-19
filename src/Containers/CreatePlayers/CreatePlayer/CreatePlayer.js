@@ -39,11 +39,12 @@ const CreatePlayer = () => {
         onSubmit={setResultFromLocalStorage}
 
       >
+        <label htmlFor="results">Результаты:</label>
         <select name='results' id='' >
           <option value='inintial'>Новый</option>
           {games}
         </select>
-        <br />
+
         <button>Х</button><button type='button'onClick={clearHandler}>Очистить историю</button>
       </form>
     </div>

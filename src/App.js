@@ -9,8 +9,8 @@ export const Context=createContext()
 
 class App extends Component {
   state = {
+    reload:true,
     games:[],
-    state:{
     inputValue: '',
     namePosition: [],
     players: [],
@@ -23,11 +23,13 @@ class App extends Component {
     playerNameControl: false,
     playerNameControlLength: false,
     }
-  };
+
 
   componentDidMount() {
  if (!localStorage.getItem('APP')) {
-   localStorage.setItem('APP', JSON.stringify([{...this.state}]));
+   localStorage.setItem('APP', JSON.stringify([]))
+   localStorage.setItem('Team', JSON.stringify(''))
+   localStorage.setItem('startState', JSON.stringify(this.state))
  } else {
    let results = JSON.parse(localStorage.getItem('APP'));
    let matches = results.map((item,index) => <option key={index} value={index}>{item.dateNow}</option>);
@@ -117,18 +119,14 @@ class App extends Component {
   };
   saveResult = (e) => {
     let dateNow = new Date().toLocaleDateString();
-    // localStorage.setItem('startState',JSON.stringify(this.state))
-    localStorage.setItem('Team',JSON.stringify(this.state.team))
+    localStorage.setItem('Team', JSON.stringify(this.state.team));
     console.log(dateNow);
     let copyState = { dateNow, ...this.state };
-    console.log('CopyState',copyState)
-    let initialState = [];
+    console.log('CopyState', copyState);
     if (localStorage.getItem('APP')) {
       let fullstate = JSON.parse(localStorage.getItem('APP'));
       fullstate.push(copyState);
       localStorage.setItem('APP', JSON.stringify(fullstate));
-    } else {
-      localStorage.setItem('APP', JSON.stringify(initialState));
     }
 
   };
@@ -149,7 +147,7 @@ class App extends Component {
 
   }
   clearHandler=()=>{
-    let startState=JSON.parse(localStorage.getItem('Test'))
+    let startState=JSON.parse(localStorage.getItem('startState'))
     localStorage.removeItem('Team')
     localStorage.removeItem('APP')
     this.setState({...startState})
