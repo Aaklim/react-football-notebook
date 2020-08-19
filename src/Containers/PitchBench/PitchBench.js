@@ -3,8 +3,8 @@ import classes from './PitchBench.module.scss'
 import Pitch from './Pitch/Pitch'
 import Bench from './Bench/Bench';
 
-const PitchBench = ({namePosition}) => {
-
+const PitchBench = (props) => {
+let namePosition=props.state.namePosition
 const pitchPlayers=[]
 const subPlayers=[]
 
@@ -16,12 +16,12 @@ subPlayers.push(obj)
   }
 })
 
-  console.log('pitchPlayers',pitchPlayers,'subplayers',subPlayers)
+
 
   return (
     <div className={classes.main}>
-      <Pitch pitchPlayers={pitchPlayers}/>
-      <Bench subPlayers={subPlayers}/>
+      <Pitch pitchPlayers={pitchPlayers} state={props.state}/>
+      <Bench subPlayers={subPlayers} state={props.state}/>
     </div>
   );
 };

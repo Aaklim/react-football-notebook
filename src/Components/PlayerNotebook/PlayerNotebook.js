@@ -1,27 +1,55 @@
 import React from 'react';
 import classes from './PlayerNotebook.module.scss';
 
-const PlayerNotebook = ({ state,name,formButton, formHandler, playersPosition, createOption }) => {
-
+const PlayerNotebook = ({
+  state,
+  name,
+  formOnChangeHandler,
+  formHandler,
+  playersPosition,
+  createOption,
+}) => {
   let positionSelected = state[name];
-  console.log(state[name]);
-  let applyClasess = classes.main;
-  if (typeof positionSelected !== 'undefined' && positionSelected !== 'SUB') {
-    applyClasess = [classes.main, classes.selected].join(' ');
+
+  let applyClasses = classes.main;
+  if (
+    typeof positionSelected !== 'undefined' &&
+    positionSelected[0] !== 'SUB'
+  ) {
+    applyClasses = [classes.main, classes.selected].join(' ');
+  } else if (
+    typeof positionSelected !== 'undefined' &&
+    positionSelected[0] === 'SUB'
+  ) {
+    applyClasses = [classes.main, classes.sub].join(' ');
   }
 
-
   return (
-    <li className={applyClasess}>
-      <span>{name}{`-ПОЗ:${positionSelected?positionSelected:''}`}</span>
-      <form name={name} onSubmit={formHandler}>
+    <li className={applyClasses}>
+      <div className={classes.nameSelected}>
+        <span>{name}</span>
+        <div className={classes.positionSelected}>{`Поз:${
+          positionSelected ? positionSelected[0] : ''
+        }`}</div>
+      </div>
+      <form name={name} onSubmit={formHandler} onChange={formOnChangeHandler}>
         <select name={name} disabled={positionSelected} defaultValue='SUB'>
-            {createOption(playersPosition)}
+          {createOption(playersPosition)}
         </select>
-        <button name='BTN1' disabled={positionSelected}>ПОЗ</button>
-        <button name='BTN2' onClick={formButton}>X</button>
+        <button name='BTN1' disabled={positionSelected}>
+          УСТ
+        </button>
+        <label htmlFor='goal'>Гол: </label>
+        {positionSelected ? (
+          <input
+            type='number'
+            name='goal'
+            value={positionSelected ? state[name + 'goal'] : 0}
+          />
+        ) : null}
       </form>
     </li>
   );
 };
+
 export default PlayerNotebook;

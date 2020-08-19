@@ -3,7 +3,33 @@
   span {
     font-weight: bold;
   }
+  form{
+    width:180px;
+  }
+  input{
+    width:30px;
+
+  }
+  label{
+    padding-left: 5px;
+  }
+  ol{
+    padding-left: 10%;
+  }
+
 }
 .selected {
   color: green;
+}
+.sub {
+  color:red;
+}
+.nameSelected {
+  display:flex;
+  justify-content: space-between;
+
+}
+.positionSelected{
+  width:70px;
+  text-align: left;
 }

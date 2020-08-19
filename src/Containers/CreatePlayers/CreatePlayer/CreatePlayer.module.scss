@@ -1,13 +1,23 @@
-$inputColor:rgb(41, 177, 86);
-.main{
-    text-align: center;
-    height:200px;
-    button{
-        margin-top: 5%;
-        font-weight: bolder;
-    }
-    input{
-        border:5px ridge $inputColor
-    }
-
+$inputColor: rgb(41, 177, 86);
+.main {
+  text-align: center;
+  height: 200px;
+  position: relative;
+  button {
+    margin-top: 5%;
+    font-weight: bolder;
+  }
+  input {
+    border: 5px ridge $inputColor;
+  }
+  input:disabled {
+    background-color: rgb(235, 235, 228);
+    border-color: red;
+  }
+  span {
+    position: absolute;
+    top: 60px;
+    left: 90px;
+    color: red;
+  }
 }

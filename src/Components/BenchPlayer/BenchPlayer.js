@@ -1,11 +1,12 @@
 import React from 'react'
 import classes from './BenchPlayer.module.scss'
 
-const BenchPlayer = ({ name }) => {
+const BenchPlayer = ({ name,state }) => {
   return (
     <div className={classes.main}>
       <span>{name}</span><br />
-      <img src='benchplayer.png' alt='Player' />
+      <img src='benchplayer.png' alt='Player' /><br/>
+      <span>{state[name+'goal']?state[name+'goal']+'⚽':null}</span>
 
     </div>
   );
