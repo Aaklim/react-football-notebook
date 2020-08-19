@@ -7,7 +7,10 @@ const CreatePlayer = () => {
   const context = useContext(Context);
   const playersCounter = context.state.playersCounter;
   const playerNameControl = context.state.playerNameControl;
-  const playerNameControlLength=context.state.playerNameControlLength
+  const playerNameControlLength = context.state.playerNameControlLength;
+  const games = context.state.games;
+  const setResultFromLocalStorage = context.setResultFromLocalStorage;
+  const clearHandler=context.clearHandler
 
   console.log('playersCounter', playersCounter);
 
@@ -16,7 +19,7 @@ const CreatePlayer = () => {
       <h1>{context.state.team}</h1>
       <form action='' name='createPlayerForm' onSubmit={context.buttonHandler}>
         <span>{playerNameControl ? 'Ошибка имени!!!' : null}</span>
-        <span>{playerNameControlLength? 'Максимальная длинна!!!' : null}</span>
+        <span>{playerNameControlLength ? 'Максимальная длинна!!!' : null}</span>
         <input
           type='text'
           value={playersCounter ? context.state.inputValue : ''}
@@ -31,10 +34,17 @@ const CreatePlayer = () => {
         <button>Заявить игрока</button>
       </form>
       <button onClick={context.saveResult}>Сохранить результат</button>
-      <form action=''>
-        <select name='' id=''>
-          this.state.team
+      <form
+        action=''
+        onSubmit={setResultFromLocalStorage}
+
+      >
+        <select name='results' id='' >
+          <option value='inintial'>Новый</option>
+          {games}
         </select>
+        <br />
+        <button>Х</button><button type='button'onClick={clearHandler}>Очистить историю</button>
       </form>
     </div>
   );

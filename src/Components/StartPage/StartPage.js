@@ -8,6 +8,7 @@ const StartPage = ({createTeamHandler,inputValue2,createTeamInputHandler}) => {
       <form action="createTeam" autoComplete='on'  onSubmit={createTeamHandler}>
           <input type="text" value={inputValue2} onChange={createTeamInputHandler} name='createTeam'/><br/>
           <button>Сохранить</button>
+
       </form>
     </div>
   );

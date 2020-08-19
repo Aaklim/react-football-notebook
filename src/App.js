@@ -9,23 +9,34 @@ export const Context=createContext()
 
 class App extends Component {
   state = {
+    games:[],
+    state:{
     inputValue: '',
     namePosition: [],
     players: [],
     playersPosition: ['RF', 'LF', 'RD', 'LD', 'GK', 'SUB'],
     team: '',
     inputValue2: '',
-    games: [],
     date: [],
     result: [],
     playersCounter: true,
     playerNameControl: false,
     playerNameControlLength: false,
+    }
   };
 
   componentDidMount() {
-   const temporaryState=JSON.parse(stateLocal)
-   this.setState({...temporaryState})
+ if (!localStorage.getItem('APP')) {
+   localStorage.setItem('APP', JSON.stringify([{...this.state}]));
+ } else {
+   let results = JSON.parse(localStorage.getItem('APP'));
+   let matches = results.map((item,index) => <option key={index} value={index}>{item.dateNow}</option>);
+   this.setState({
+     team: JSON.parse(localStorage.getItem('Team')),
+     games: matches,
+   });
+ }
+
   }
 
   buttonHandler = (e) => {
@@ -105,12 +116,21 @@ class App extends Component {
     }
   };
   saveResult = (e) => {
-    localStorage.setItem('Team', JSON.stringify(`${this.state.team}`));
-    localStorage.setItem(`${this.state.team}`,this.stateTolocalStorage(this.state))
-    this.setState((state) => ({
-      games: [...state.games, state.team],
-      date: [...state.date, new Date().toDateString()],
-    }));
+    let dateNow = new Date().toLocaleDateString();
+    // localStorage.setItem('startState',JSON.stringify(this.state))
+    localStorage.setItem('Team',JSON.stringify(this.state.team))
+    console.log(dateNow);
+    let copyState = { dateNow, ...this.state };
+    console.log('CopyState',copyState)
+    let initialState = [];
+    if (localStorage.getItem('APP')) {
+      let fullstate = JSON.parse(localStorage.getItem('APP'));
+      fullstate.push(copyState);
+      localStorage.setItem('APP', JSON.stringify(fullstate));
+    } else {
+      localStorage.setItem('APP', JSON.stringify(initialState));
+    }
+
   };
 
   stateTolocalStorage = (state) => {
@@ -119,8 +139,23 @@ class App extends Component {
     let jsonCopystate = JSON.stringify(copyState);
     return jsonCopystate;
   };
+  setResultFromLocalStorage=(e)=>{
+    e.preventDefault()
+    let gameNumber=e.target.elements['results'].value
+    console.log('SetResult',gameNumber)
+    let localGamesstate=JSON.parse(localStorage.getItem('APP'))[gameNumber]
+    console.log('GAMENUMBER',localGamesstate)
+    this.setState({...localGamesstate})
+
+  }
+  clearHandler=()=>{
+    let startState=JSON.parse(localStorage.getItem('Test'))
+    localStorage.removeItem('Team')
+    localStorage.removeItem('APP')
+    this.setState({...startState})
+  }
   render() {
-    console.log('render');
+
     const fullcontext = {
       state: this.state,
       buttonHandler: this.buttonHandler,
@@ -130,6 +165,8 @@ class App extends Component {
       formButton: this.formButton,
       saveResult: this.saveResult,
       formOnChangeHandler: this.formOnChangeHandler,
+      setResultFromLocalStorage:this.setResultFromLocalStorage,
+      clearHandler:this.clearHandler
     };
 
     return (
