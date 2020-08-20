@@ -137,11 +137,7 @@ class App extends Component {
       let fullstate = JSON.parse(localStorage.getItem('APP'));
       fullstate.push(copyState);
       localStorage.setItem('APP', JSON.stringify(fullstate));
-
-      //get startstate
-      let startState=JSON.parse(localStorage.getItem('startState'))
-
-
+      let startState = JSON.parse(localStorage.getItem('startState'));
       let results = JSON.parse(localStorage.getItem('APP'));
       let matches = results.map((item, index) => (
         <option key={index} value={index}>
@@ -149,9 +145,9 @@ class App extends Component {
         </option>
       ));
       this.setState({
-        gamesFullstate:fullstate,
+        gamesFullstate: fullstate,
         gamesList: matches,
-        changingState:{...startState}
+        changingState: { ...startState },
       });
     }
 
@@ -163,13 +159,12 @@ class App extends Component {
     let jsonCopystate = JSON.stringify(copyState);
     return jsonCopystate;
   };
-  //stop
   setResultFromLocalStorage=(e)=>{
     e.preventDefault();
     let startState = JSON.parse(localStorage.getItem('startState'));
-    console.log('SetSTAeLocal',startState)
+    console.log('StartState',startState)
     let gameNumber = e.target.elements['results'].value;
-
+    console.log(gameNumber)
     if (gameNumber === 'initial') {
       this.setState((state) => ({
         changingState: { ...startState },
@@ -185,7 +180,12 @@ class App extends Component {
     let startState=JSON.parse(localStorage.getItem('startState'))
     localStorage.removeItem('Team')
     localStorage.removeItem('APP')
-    this.setState({...startState})
+    this.setState(state=>({
+      changingState:{...startState},
+      gamesFullstate:[],
+      gamesList:[],
+      team:''
+    }))
   }
   render() {
 

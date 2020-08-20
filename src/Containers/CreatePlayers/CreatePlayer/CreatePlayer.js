@@ -42,7 +42,7 @@ const CreatePlayer = () => {
       <form action='' onSubmit={setResultFromLocalStorage}>
         <label htmlFor='results'>Результаты:</label>
         <select name='results' id=''>
-          <option value='inintial'>Новый</option>
+          <option value='initial'>Новый матч</option>
           {games}
         </select>
 
