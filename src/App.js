@@ -9,6 +9,10 @@ export const Context=createContext()
 
 class App extends Component {
   state = {
+    gamesList:[],
+    gamesFullstate:[],
+    team:'',
+    changingState:{
     reload:true,
     games:[],
     inputValue: '',
@@ -23,19 +27,21 @@ class App extends Component {
     playerNameControl: false,
     playerNameControlLength: false,
     }
-
+  }
 
   componentDidMount() {
+    console.log('componentDidmount')
  if (!localStorage.getItem('APP')) {
    localStorage.setItem('APP', JSON.stringify([]))
    localStorage.setItem('Team', JSON.stringify(''))
-   localStorage.setItem('startState', JSON.stringify(this.state))
+   localStorage.setItem('startState', JSON.stringify(this.state.changingState))
  } else {
    let results = JSON.parse(localStorage.getItem('APP'));
    let matches = results.map((item,index) => <option key={index} value={index}>{item.dateNow}</option>);
    this.setState({
      team: JSON.parse(localStorage.getItem('Team')),
-     games: matches,
+     gamesList: matches,
+     gamesFullstate:results,
    });
  }
 
@@ -43,18 +49,20 @@ class App extends Component {
 
   buttonHandler = (e) => {
     e.preventDefault();
-    console.log('ISNAN', isNaN(this.state.inputValue));
-    if (this.state.inputValue.length > 0 && isNaN(this.state.inputValue)) {
-      if (this.state.players.length < 9) {
+    console.log('ISNAN', isNaN(this.state.changingState.inputValue));
+    if (this.state.changingState.inputValue.length > 0 && isNaN(this.state.changingState.inputValue)) {
+      if (this.state.changingState.players.length < 9) {
         this.setState((state) => ({
-          players: [...state.players, state.inputValue],
+          changingState:{...state.changingState, players: [...state.changingState.players, state.changingState.inputValue],
           inputValue: '',
-        }));
+        }}));
       } else {
-        this.setState({ playersCounter: false });
+        this.setState(state=>({
+          changingState:{...state.changingState, playersCounter: false }}));
       }
     } else {
-      this.setState({ playerNameControl: true });
+      this.setState(state=>({
+        changingState:{...state.changingState, playerNameControl: true }}));
     }
   };
   inputHandler = (e) => {
@@ -62,20 +70,20 @@ class App extends Component {
 
     console.log(value.length);
     value.length < 14
-      ? this.setState({
-          inputValue: value,
+      ? this.setState(state=>({
+          changingState:{...state.changingState,inputValue: value,
           playerNameControl: false,
           playerNameControlLength: false,
-        })
-      : this.setState({ playerNameControlLength: true });
+      }}))
+      : this.setState(state=>({changingState:{...state.changingState, playerNameControlLength: true }}));
   };
   deletePlayerPosition = (value) => {
     if (value !== 'SUB') {
-      let array = [...this.state.playersPosition];
+      let array = [...this.state.changingState.playersPosition];
       let index = array.indexOf(value);
       if (index !== -1) {
         array.splice(index, 1);
-        this.setState({ playersPosition: array });
+        this.setState(state=>({changingState:{...state.changingState,playersPosition: array }}));
       }
     }
   };
@@ -83,10 +91,10 @@ class App extends Component {
     e.preventDefault();
     let name = e.target.name;
     let position = e.target.elements[e.target.name].value;
-    this.setState((state) => ({
-      namePosition: [...state.namePosition, { name: name, position: position }],
+    this.setState((state) => ({changingState:{...state.changingState,
+      namePosition: [...state.changingState.namePosition, { name: name, position: position }],
       [name]: [position, 0],
-    }));
+    }}));
     this.deletePlayerPosition(position);
   };
   createOption = (option) => {
@@ -100,33 +108,51 @@ class App extends Component {
   };
   createTeamInputHandler = (e) => {
     let value = e.target.value;
-    this.setState({ inputValue2: value });
+    this.setState(state=>({changingState:{...state.changingState,inputValue2: value }}));
   };
   createTeamHandler = (e) => {
     e.preventDefault();
     let name = e.target.elements[0].value;
-    this.setState({ team: name });
+    this.setState(state=>({
+      team:name,
+      changingState:{...state.changingState, team: name }}));
   };
   formOnChangeHandler = (e) => {
     if (e.target.name === 'goal') {
       let name = e.currentTarget.name;
       let event = e.currentTarget.elements['goal'].value;
       console.log(name, event);
-      this.setState({
-        [name + 'goal']: event,
-      });
+      this.setState(state=>({
+        changingState:{...state.changingState,[name + 'goal']: event,  }}))
+
+
     }
   };
   saveResult = (e) => {
+
     let dateNow = new Date().toLocaleDateString();
-    localStorage.setItem('Team', JSON.stringify(this.state.team));
-    console.log(dateNow);
-    let copyState = { dateNow, ...this.state };
-    console.log('CopyState', copyState);
+    localStorage.setItem('Team', JSON.stringify(this.state.changingState.team));
+    let copyState = { dateNow, ...this.state.changingState };
     if (localStorage.getItem('APP')) {
       let fullstate = JSON.parse(localStorage.getItem('APP'));
       fullstate.push(copyState);
       localStorage.setItem('APP', JSON.stringify(fullstate));
+
+      //get startstate
+      let startState=JSON.parse(localStorage.getItem('startState'))
+
+
+      let results = JSON.parse(localStorage.getItem('APP'));
+      let matches = results.map((item, index) => (
+        <option key={index} value={index}>
+          {item.dateNow}
+        </option>
+      ));
+      this.setState({
+        gamesFullstate:fullstate,
+        gamesList: matches,
+        changingState:{...startState}
+      });
     }
 
   };
@@ -137,13 +163,22 @@ class App extends Component {
     let jsonCopystate = JSON.stringify(copyState);
     return jsonCopystate;
   };
+  //stop
   setResultFromLocalStorage=(e)=>{
-    e.preventDefault()
-    let gameNumber=e.target.elements['results'].value
-    console.log('SetResult',gameNumber)
-    let localGamesstate=JSON.parse(localStorage.getItem('APP'))[gameNumber]
-    console.log('GAMENUMBER',localGamesstate)
-    this.setState({...localGamesstate})
+    e.preventDefault();
+    let startState = JSON.parse(localStorage.getItem('startState'));
+    console.log('SetSTAeLocal',startState)
+    let gameNumber = e.target.elements['results'].value;
+
+    if (gameNumber === 'initial') {
+      this.setState((state) => ({
+        changingState: { ...startState },
+      }));
+    } else {
+      this.setState((state) => ({
+        changingState: { ...state.gamesFullstate[gameNumber] },
+      }));
+    }
 
   }
   clearHandler=()=>{
@@ -156,6 +191,7 @@ class App extends Component {
 
     const fullcontext = {
       state: this.state,
+      changingState:this.state.changingState,
       buttonHandler: this.buttonHandler,
       inputHandler: this.inputHandler,
       formHandler: this.formHandler,
@@ -171,16 +207,17 @@ class App extends Component {
       <Context.Provider value={fullcontext}>
         <div className={classes.wrapper}>
           <div className={classes.main}>
+
             {this.state.team.length > 1 ? (
               <CreatePlayers />
             ) : (
               <StartPage
                 createTeamHandler={this.createTeamHandler}
-                inputValue2={this.state.inputValue2}
+                inputValue2={this.state.changingState.inputValue2}
                 createTeamInputHandler={this.createTeamInputHandler}
               />
             )}
-            <PitchBench state={this.state} />
+            <PitchBench state={this.state.changingState} />
           </div>
         </div>
       </Context.Provider>

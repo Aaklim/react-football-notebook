@@ -77,5 +77,5 @@ const stateLocal=JSON.stringify({
     "Kamenevgoal": "2",
     "Geniagoal": "1"
   })
-  console.log(stateLocal)
+  // console.log(stateLocal)
   export default stateLocal;
