@@ -13,7 +13,7 @@ class App extends Component {
     gamesFullstate:[],
     team:'',
     changingState:{
-    reload:true,
+    saved:false,
     games:[],
     inputValue: '',
     namePosition: [],
@@ -22,7 +22,8 @@ class App extends Component {
     team: '',
     inputValue2: '',
     date: [],
-    result: [],
+    result: '',
+    opponent:'',
     playersCounter: true,
     playerNameControl: false,
     playerNameControlLength: false,
@@ -129,10 +130,12 @@ class App extends Component {
     }
   };
   saveResult = (e) => {
+    let opponentTeam=prompt('Введите название команды соперника')
+    let matchresult=prompt('Введите результат матча')
 
     let dateNow = new Date().toLocaleDateString();
     localStorage.setItem('Team', JSON.stringify(this.state.changingState.team));
-    let copyState = { dateNow, ...this.state.changingState };
+    let copyState = { dateNow, ...this.state.changingState,result:matchresult,opponent:opponentTeam,saved:true};
     if (localStorage.getItem('APP')) {
       let fullstate = JSON.parse(localStorage.getItem('APP'));
       fullstate.push(copyState);
@@ -177,15 +180,15 @@ class App extends Component {
 
   }
   clearHandler=()=>{
-    let startState=JSON.parse(localStorage.getItem('startState'))
-    localStorage.removeItem('Team')
-    localStorage.removeItem('APP')
-    this.setState(state=>({
-      changingState:{...startState},
-      gamesFullstate:[],
-      gamesList:[],
-      team:''
-    }))
+    let startState = JSON.parse(localStorage.getItem('startState'));
+    localStorage.setItem('APP', JSON.stringify([]));
+    localStorage.setItem('Team', JSON.stringify(''));
+    this.setState((state) => ({
+      changingState: { ...startState },
+      gamesFullstate: [],
+      gamesList: [],
+      team: '',
+    }));
   }
   render() {
 

@@ -5,4 +5,17 @@
   background-position: center;
   height: 450px;
   position: relative;
+  .scoreBoard{
+    background-image: url('../../../img/score-board.png');
+    background-repeat: no-repeat;
+    width:300px;
+    height:100px;
+    background-size: cover;
+    background-position: center;
+    margin:0 auto;
+    color:white;
+    font-size: larger;
+    text-align: center;
+    padding-top: 20px;
+  }
 }

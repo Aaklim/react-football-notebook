@@ -10,13 +10,14 @@ const CreatePlayer = () => {
   const playerNameControlLength = context.changingState.playerNameControlLength;
   const games = context.state.gamesList;
   const setResultFromLocalStorage = context.setResultFromLocalStorage;
-  const clearHandler=context.clearHandler
+  const clearHandler = context.clearHandler;
 
   console.log('gameList', games);
 
   return (
     <div className={classes.main}>
       <h1>{context.state.team}</h1>
+
       <form
         action=''
         name='createPlayerForm'
@@ -46,7 +47,7 @@ const CreatePlayer = () => {
           {games}
         </select>
 
-        <button>Х</button>
+        <button>Выбрать</button>
         <button type='button' onClick={clearHandler}>
           Очистить историю
         </button>
