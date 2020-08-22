@@ -20,4 +20,27 @@ $inputColor: rgb(41, 177, 86);
     left: 90px;
     color: red;
   }
+  ul{
+    margin:0;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    li{
+        list-style-type: none;
+        border:5px ridge $inputColor;
+        padding:3px;
+        margin:5px;
+        width:50%;
+        background-color:$inputColor;
+        border-radius:5%;
+    }
+    .link{
+      text-decoration: none;
+      color:black;
+      font-weight: bolder;
+      width:100%;
+      display:block;
+
+    }
+}
 }

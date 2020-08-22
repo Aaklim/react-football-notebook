@@ -8,6 +8,7 @@ const PlayerNotebook = ({
   formHandler,
   playersPosition,
   createOption,
+  deletePlayerhandler
 }) => {
   let positionSelected = state[name];
 
@@ -32,13 +33,14 @@ const PlayerNotebook = ({
           positionSelected ? positionSelected[0] : ''
         }`}</div>
       </div>
-      <form name={name} onSubmit={formHandler} onChange={formOnChangeHandler}>
+      <form name={name} onSubmit={formHandler} onChange={formOnChangeHandler} onClick={deletePlayerhandler}>
         <select name={name} disabled={positionSelected} defaultValue='SUB'>
           {createOption(playersPosition)}
         </select>
         <button name='BTN1' disabled={positionSelected}>
           УСТ
         </button>
+        {/* <button name="BTN2" >Удл</button> */}
         <label htmlFor='goal'>Гол: </label>
         {positionSelected ? (
           <input

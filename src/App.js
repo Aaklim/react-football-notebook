@@ -134,8 +134,8 @@ class App extends Component {
     let matchresult=prompt('Введите результат матча')
 
     let dateNow = new Date().toLocaleDateString();
-    localStorage.setItem('Team', JSON.stringify(this.state.changingState.team));
-    let copyState = { dateNow, ...this.state.changingState,result:matchresult,opponent:opponentTeam,saved:true};
+    localStorage.setItem('Team', JSON.stringify(this.state.team));
+    let copyState = { dateNow, ...this.state.changingState,result:matchresult,opponent:opponentTeam,saved:true,team:this.state.team};
     if (localStorage.getItem('APP')) {
       let fullstate = JSON.parse(localStorage.getItem('APP'));
       fullstate.push(copyState);
@@ -155,7 +155,6 @@ class App extends Component {
     }
 
   };
-
   stateTolocalStorage = (state) => {
     let copyState = Array.isArray(state) ? [...state] : { ...state };
     console.log(copyState);
@@ -190,6 +189,36 @@ class App extends Component {
       team: '',
     }));
   }
+  onLinkMatchHandler=()=>{
+
+    let startState = JSON.parse(localStorage.getItem('startState'))
+    this.setState((state) => ({
+      changingState: { ...startState },
+    }));
+  }
+  clearStartLine=()=>{
+    this.setState(state=>({
+      changingState:{...state.changingState,namePosition:[],players:[]}
+    }))
+  }
+  // deletePlayerhandler=(e)=>{
+
+  //   if(e.target.name === 'BTN2'){
+  //    let name=e.currentTarget.name;
+  //    let position=this.state.changingState[e.currentTarget.name][0]
+  //   console.log('DeleteСurrent Name',name)
+  //   console.log('CurrentTargetName position',position)
+
+  //   let array=[...this.state.changingState.playersPosition]
+  //   console.log(array)
+  //   // let players=[...this.state.changingState.players]
+  //   // let index=players.findIndex(name)
+  //   // let lastplayers=players.splice(index, 1)
+  //   // this.setState(state=>({
+  //   //   changingState:{...state.changingState,playersPosition:array,players:lastplayers}
+  //   // }))
+
+  // } }
   render() {
 
     const fullcontext = {
@@ -203,14 +232,16 @@ class App extends Component {
       saveResult: this.saveResult,
       formOnChangeHandler: this.formOnChangeHandler,
       setResultFromLocalStorage:this.setResultFromLocalStorage,
-      clearHandler:this.clearHandler
+      clearHandler:this.clearHandler,
+      onLinkMatchHandler:this.onLinkMatchHandler,
+      deletePlayerhandler:this.deletePlayerhandler,
+      clearStartLine:this.clearStartLine
     };
 
     return (
       <Context.Provider value={fullcontext}>
         <div className={classes.wrapper}>
           <div className={classes.main}>
-
             {this.state.team.length > 1 ? (
               <CreatePlayers />
             ) : (
