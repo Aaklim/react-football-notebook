@@ -1,11 +1,15 @@
 $inputColor: rgb(41, 177, 86);
 .main {
   text-align: center;
-  height: 200px;
+  height: 220px;
   position: relative;
   button {
-    margin-top: 1%;
+    margin-top:10px;
+
     font-weight: bolder;
+  }
+  .innerbutton2{
+    margin-left: 10px;
   }
   input {
     border: 5px ridge $inputColor;
@@ -16,9 +20,13 @@ $inputColor: rgb(41, 177, 86);
   }
   span {
     position: absolute;
-    top: 60px;
+    top: 85px;
     left: 90px;
     color: red;
+  }
+  h1{
+    margin-top: 0;
+    margin-bottom: 10px;
   }
   ul{
     margin:0;

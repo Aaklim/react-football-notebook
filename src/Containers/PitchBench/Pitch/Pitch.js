@@ -4,7 +4,7 @@ import PlayerPitch from '../../../Components/PlayerPitch/PlayerPitch';
 
 const Pitch = (props) => {
   let pitchPlayers = props.pitchPlayers;
-  console.log('PitchProps',props)
+
 
   const namePosition = pitchPlayers.map((obj) => (
     <PlayerPitch
@@ -19,11 +19,9 @@ const Pitch = (props) => {
     <div className={classes.main}>
       {props.state.saved ? (
         <div className={classes.scoreBoard}>
-          <span>
-            {props.state.team} VS {props.state.opponent}
-          </span>
-          <br />
-          <span>{props.state.result}</span>
+          <div className={classes.team}>{props.state.team}</div>
+          <div className={classes.result}>{props.state.result}</div>
+          <div className={classes.team}>{props.state.opponent}</div>
         </div>
       ) : null}
       {namePosition}

@@ -6,7 +6,7 @@ const BenchPlayer = ({ name,state }) => {
     <div className={classes.main}>
       <span>{name}</span><br />
       <img src='benchplayer.png' alt='Player' /><br/>
-      <span>{state[name+'goal']?state[name+'goal']+'⚽':null}</span>
+      <span className={classes.goals}>{state[name+'goal']?state[name+'goal']+'⚽':null}</span>
 
     </div>
   );

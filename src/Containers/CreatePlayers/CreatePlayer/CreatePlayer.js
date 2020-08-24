@@ -11,6 +11,7 @@ const CreatePlayer = () => {
   const playerNameControlLength = context.changingState.playerNameControlLength;
   const onLinkMatchHandler=context.onLinkMatchHandler;
   const clearStartLine=context.clearStartLine;
+  const saveStartline=context.saveStartline;
 
 
 
@@ -57,8 +58,9 @@ const CreatePlayer = () => {
 
           <button>Заявить игрока</button>
         </form>
+        <button className={classes.innerbutton1} onClick={saveStartline}>Сохранить состав</button>
+        <button className={classes.innerbutton2} onClick={clearStartLine}>Очистить состав</button>
         <button onClick={context.saveResult}>Сохранить результат</button>
-        <button onClick={clearStartLine}>Очистить заявку</button>
         </Route>
         <Route path='/results' component={Results} />
         </Switch>

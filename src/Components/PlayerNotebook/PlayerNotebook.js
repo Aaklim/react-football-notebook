@@ -15,12 +15,12 @@ const PlayerNotebook = ({
   let applyClasses = classes.main;
   if (
     typeof positionSelected !== 'undefined' &&
-    positionSelected[0] !== 'SUB'
+    /SUB/.test(positionSelected[0]) !== true
   ) {
     applyClasses = [classes.main, classes.selected].join(' ');
   } else if (
     typeof positionSelected !== 'undefined' &&
-    positionSelected[0] === 'SUB'
+    /SUB/.test(positionSelected[0]) === true
   ) {
     applyClasses = [classes.main, classes.sub].join(' ');
   }
@@ -33,14 +33,26 @@ const PlayerNotebook = ({
           positionSelected ? positionSelected[0] : ''
         }`}</div>
       </div>
-      <form name={name} onSubmit={formHandler} onChange={formOnChangeHandler} onClick={deletePlayerhandler}>
-        <select name={name} disabled={positionSelected} defaultValue='SUB'>
+      <form
+        name={name}
+        onSubmit={formHandler}
+        onChange={formOnChangeHandler}
+        onClick={deletePlayerhandler}
+      >
+        <select
+          name={name}
+          disabled={positionSelected}
+          hidden={positionSelected}
+        >
           {createOption(playersPosition)}
         </select>
         <button name='BTN1' disabled={positionSelected}>
           УСТ
         </button>
-        {/* <button name="BTN2" >Удл</button> */}
+        <button name='BTN2' type='button' onClick={deletePlayerhandler}>
+          X
+        </button>
+
         <label htmlFor='goal'>Гол: </label>
         {positionSelected ? (
           <input

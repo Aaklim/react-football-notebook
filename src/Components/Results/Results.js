@@ -10,22 +10,20 @@ const Results =()=>{
  const clearHandler = context.clearHandler;
  const games = context.state.gamesList;
     return (
-        <div className={classes.main}>
-            <form action='' onSubmit={setResultFromLocalStorage}>
-          {/* <label htmlFor='results'>Результаты:</label> */}
-          <select name='results' id='' >
-            {/* <option value='initial'>Новый матч</option> */}
+      <div className={classes.main}>
+        <form action='' onSubmit={setResultFromLocalStorage}>
+          <select name='results' id=''>
             {games}
           </select>
 
-          <button>Выбрать</button>
+          <button className={classes.buttonChoice}>Выбрать</button>
           <Link to='/'>
-          <button type='button' onClick={clearHandler}>
-            Очистить историю
-          </button>
+            <button type='button' onClick={clearHandler}>
+              Очистить историю
+            </button>
           </Link>
         </form>
-        </div>
-    )
+      </div>
+    );
 }
 export default Results;

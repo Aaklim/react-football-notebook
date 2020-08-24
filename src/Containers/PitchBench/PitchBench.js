@@ -5,12 +5,11 @@ import Bench from './Bench/Bench';
 
 const PitchBench = (props) => {
 let namePosition=props.state.namePosition
-console.log('PitchBench-namePosition',namePosition)
 const pitchPlayers=[]
 const subPlayers=[]
 
 namePosition.forEach(obj=>{
-  if(obj.position ==='SUB'){
+  if(/SUB/.test(obj.position)){
 subPlayers.push(obj)
   } else {
     pitchPlayers.push(obj)
