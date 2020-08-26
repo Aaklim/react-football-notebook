@@ -38,6 +38,9 @@ class App extends Component {
       playerNameControlLength: false,
     },
   };
+  componentWillMount(){
+    document.body.style.overflow='hidden';
+  }
   componentDidMount() {
     if (!localStorage.getItem('APP')) {
       localStorage.setItem('APP', JSON.stringify([]));
@@ -64,6 +67,9 @@ class App extends Component {
         changingState: { ...this.state.changingState, players:[...startLine],playersPosition:[...playersPosition] },
       });
     }
+  }
+  componentWillUnmount(){
+    document.body.style.overflow='visible';
   }
   buttonHandler = (e) => {
     e.preventDefault();
