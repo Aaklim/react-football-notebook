@@ -1,27 +1,25 @@
-import React from 'react'
-import classes from './PitchBench.module.scss'
-import Pitch from './Pitch/Pitch'
+import React from 'react';
+import classes from './PitchBench.module.scss';
+import Pitch from './Pitch/Pitch';
 import Bench from './Bench/Bench';
 
 const PitchBench = (props) => {
-let namePosition=props.state.namePosition
-const pitchPlayers=[]
-const subPlayers=[]
+  let namePosition = props.state.namePosition;
+  const pitchPlayers = [];
+  const subPlayers = [];
 
-namePosition.forEach(obj=>{
-  if(/SUB/.test(obj.position)){
-subPlayers.push(obj)
-  } else {
-    pitchPlayers.push(obj)
-  }
-})
-
-
+  namePosition.forEach((obj) => {
+    if (/SUB/.test(obj.position)) {
+      subPlayers.push(obj);
+    } else {
+      pitchPlayers.push(obj);
+    }
+  });
 
   return (
     <div className={classes.main}>
-      <Pitch pitchPlayers={pitchPlayers} state={props.state}/>
-      <Bench subPlayers={subPlayers} state={props.state}/>
+      <Pitch pitchPlayers={pitchPlayers} state={props.state} />
+      <Bench subPlayers={subPlayers} state={props.state} />
     </div>
   );
 };

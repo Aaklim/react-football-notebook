@@ -1,3 +1,5 @@
+$subColor:rgb(189, 58, 58);
+$selectedColor:rgb(66, 153, 54);
 .main {
   margin: 5px;
   span {
@@ -13,16 +15,14 @@
   label{
     padding-left: 5px;
   }
-  ol{
-    padding-left: 5%;
-  }
+
 
 }
 .selected {
-  color: green;
+  color:$selectedColor;
 }
 .sub {
-  color:rgb(189, 58, 58);
+  color:$subColor;
 }
 .nameSelected {
   display:flex;

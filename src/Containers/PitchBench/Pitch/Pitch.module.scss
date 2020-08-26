@@ -6,34 +6,29 @@
   height: 450px;
   position: relative;
   z-index: 0;
-  .scoreBoard{
+  .scoreBoard {
     background-image: url('../../../img/score-board.png');
     background-repeat: no-repeat;
-    width:200px;
-    height:65px;
+    width: 200px;
+    height: 65px;
     background-size: cover;
-    background-position:top;
-    margin:0 auto;
-    color:white;
+    background-position: top;
+    margin: 0 auto;
+    color: white;
     font-size: small;
     text-align: center;
     padding-top: 20px;
     position: relative;
     z-index: 1;
   }
-  .team{
- max-width:150px;
- margin:0 auto;
- overflow-x:hidden;
-
+  .team {
+    max-width: 150px;
+    margin: 0 auto;
+    overflow-x: hidden;
   }
-  .result{
-    max-width:150px;
- margin:0 auto;
- overflow-x:hidden;
+  .result {
+    max-width: 150px;
+    margin: 0 auto;
+    overflow-x: hidden;
   }
-
-
-
-
 }

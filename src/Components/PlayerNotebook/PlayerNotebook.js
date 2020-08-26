@@ -4,11 +4,11 @@ import classes from './PlayerNotebook.module.scss';
 const PlayerNotebook = ({
   state,
   name,
-  formOnChangeHandler,
   formHandler,
   playersPosition,
   createOption,
-  deletePlayerhandler
+  deletePlayerhandler,
+  goalInputHandler,
 }) => {
   let positionSelected = state[name];
 
@@ -33,20 +33,11 @@ const PlayerNotebook = ({
           positionSelected ? positionSelected[0] : ''
         }`}</div>
       </div>
-      <form
-        name={name}
-        onSubmit={formHandler}
-        onChange={formOnChangeHandler}
-        onClick={deletePlayerhandler}
-      >
-        <select
-          name={name}
-          disabled={positionSelected}
-          hidden={positionSelected}
-        >
+      <form name={name} onSubmit={formHandler} onClick={deletePlayerhandler}>
+        <select name={name} hidden={positionSelected}>
           {createOption(playersPosition)}
         </select>
-        <button name='BTN1' disabled={positionSelected}>
+        <button name='BTN1' hidden={positionSelected}>
           УСТ
         </button>
         <button name='BTN2' type='button' onClick={deletePlayerhandler}>
@@ -57,8 +48,9 @@ const PlayerNotebook = ({
         {positionSelected ? (
           <input
             type='number'
-            name='goal'
-            value={positionSelected ? state[name + 'goal'] : 0}
+            name={name + 'goal'}
+            value={state[name] ? state[name][1] : ''}
+            onChange={goalInputHandler}
           />
         ) : null}
       </form>

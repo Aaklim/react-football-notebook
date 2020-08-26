@@ -3,13 +3,13 @@ import classes from './App.module.scss';
 import CreatePlayers from './Containers/CreatePlayers/CreatePlayers';
 import PitchBench from './Containers/PitchBench/PitchBench';
 import StartPage from './Components/StartPage/StartPage';
-import Allstar from './All-star/all-star'
+import Allstar from './All-star/all-star';
 export const Context = createContext();
 
 class App extends Component {
   state = {
     gamesList: [],
-    gamesFullstate: [],
+    gamesFullstate: [Allstar],
     team: '',
     changingState: {
       saved: false,
@@ -29,7 +29,7 @@ class App extends Component {
         'SUB4',
       ],
       team: '',
-      inputValue2: '',
+      inputValueStartPage: '',
       date: [],
       result: '',
       opponent: '',
@@ -38,20 +38,20 @@ class App extends Component {
       playerNameControlLength: false,
     },
   };
-
   componentDidMount() {
     if (!localStorage.getItem('APP')) {
       localStorage.setItem('APP', JSON.stringify([]));
       localStorage.setItem('Team', JSON.stringify(''));
       localStorage.setItem('StartLine', JSON.stringify([]));
+      localStorage.setItem('playersPosition', JSON.stringify([...this.state.changingState.playersPosition]));
       localStorage.setItem(
         'startState',
-        JSON.stringify(this.state.changingState)
+        JSON.stringify({...this.state.changingState})
       );
     } else {
-      let results = JSON.parse(localStorage.getItem('APP'));
-      let startLine = JSON.parse(localStorage.getItem('StartLine'));
-
+      let results = [...JSON.parse(localStorage.getItem('APP'))];
+      let startLine =[...JSON.parse(localStorage.getItem('StartLine'))];
+      let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
       let matches = results.map((item, index) => (
         <option key={index} value={index}>
           {item.dateNow}
@@ -59,13 +59,12 @@ class App extends Component {
       ));
       this.setState({
         team: JSON.parse(localStorage.getItem('Team')),
-        gamesList: matches,
-        gamesFullstate: results,
-        changingState: {...this.state.changingState,players:startLine},
+        gamesList:[...matches],
+        gamesFullstate: [...results],
+        changingState: { ...this.state.changingState, players:[...startLine],playersPosition:[...playersPosition] },
       });
     }
   }
-
   buttonHandler = (e) => {
     e.preventDefault();
     if (
@@ -121,7 +120,7 @@ class App extends Component {
     if (index !== -1) {
       array.splice(index, 1);
       this.setState((state) => ({
-        changingState: { ...state.changingState, playersPosition: array },
+        changingState: { ...state.changingState, playersPosition:[...array] },
       }));
     }
   };
@@ -153,34 +152,26 @@ class App extends Component {
   createTeamInputHandler = (e) => {
     let value = e.target.value;
     this.setState((state) => ({
-      changingState: { ...state.changingState, inputValue2: value },
+      changingState: { ...state.changingState, inputValueStartPage: value },
     }));
   };
   createTeamHandler = (e) => {
     e.preventDefault();
     let name = e.target.elements[0].value;
-    localStorage.setItem('Team',JSON.stringify(name))
-    this.setState((state) => ({
+    let startState = JSON.parse(localStorage.getItem('startState'));
+    localStorage.setItem('Team', JSON.stringify(name));
+    this.setState({
       team: name,
-      changingState: { ...state.changingState, team: name },
-    }));
-  };
-  formOnChangeHandler = (e) => {
-    if (e.target.name === 'goal') {
-      let name = e.currentTarget.name;
-      let event = e.currentTarget.elements['goal'].value;
-      console.log(name, event);
-      this.setState((state) => ({
-        changingState: { ...state.changingState, [name + 'goal']: event },
-      }));
-    }
+      changingState: { ...startState, team: name },
+    });
   };
   saveResult = (e) => {
     let opponentTeam = prompt('Введите название команды соперника');
     let matchresult = prompt('Введите результат матча');
-   //
+    if(opponentTeam&&matchresult){
     let dateNow = new Date().toLocaleDateString();
     localStorage.setItem('Team', JSON.stringify(this.state.team));
+    let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
     let copyState = {
       dateNow,
       ...this.state.changingState,
@@ -188,65 +179,54 @@ class App extends Component {
       opponent: opponentTeam,
       saved: true,
       team: this.state.team,
+      playersPosition:[...playersPosition]
     };
     if (localStorage.getItem('APP')) {
-      let fullstate = JSON.parse(localStorage.getItem('APP'));
-      let startLine=JSON.parse(localStorage.getItem('StartLine'))
+      let fullstate = [...JSON.parse(localStorage.getItem('APP'))];
+      let startLine =[...JSON.parse(localStorage.getItem('StartLine'))];
       fullstate.push(copyState);
       localStorage.setItem('APP', JSON.stringify(fullstate));
-      let startState = JSON.parse(localStorage.getItem('startState'));
-      let results = JSON.parse(localStorage.getItem('APP'));
+      let startState = {...JSON.parse(localStorage.getItem('startState'))};
+      let results = [...JSON.parse(localStorage.getItem('APP'))];
       let matches = results.map((item, index) => (
         <option key={index} value={index}>
           {item.dateNow}
         </option>
       ));
-      this.setState({
-        gamesFullstate: fullstate,
-        gamesList: matches,
-        changingState: { ...startState,players:startLine },
-      });
+      this.setState(state=>({
+        gamesFullstate:[...fullstate],
+        gamesList: [...matches],
+        changingState: { ...startState, players:[...startLine] },
+      }));
     }
-  };
-  stateTolocalStorage = (state) => {
-    let copyState = Array.isArray(state) ? [...state] : { ...state };
-    console.log(copyState);
-    let jsonCopystate = JSON.stringify(copyState);
-    return jsonCopystate;
-  };
+  }};
   setResultFromLocalStorage = (e) => {
     e.preventDefault();
-    let startState = JSON.parse(localStorage.getItem('startState'));
-    console.log('StartState', startState);
     let gameNumber = e.target.elements['results'].value;
-    console.log(gameNumber);
-    if (gameNumber === 'initial') {
-      this.setState((state) => ({
-        changingState: { ...startState },
-      }));
-    } else {
-      this.setState((state) => ({
-        changingState: { ...state.gamesFullstate[gameNumber] },
-      }));
-    }
+    let newstate={...this.state.gamesFullstate[gameNumber]}
+    this.setState((state) => ({
+      changingState: {...newstate},
+    }));
   };
   clearHandler = () => {
-    let startState = JSON.parse(localStorage.getItem('startState'));
+    let startState = { ...JSON.parse(localStorage.getItem('startState')) };
     localStorage.setItem('APP', JSON.stringify([]));
     localStorage.setItem('Team', JSON.stringify(''));
-    this.setState((state) => ({
+    localStorage.setItem('StartLine', JSON.stringify([]));
+    this.setState({
       changingState: { ...startState },
       gamesFullstate: [],
       gamesList: [],
       team: '',
-    }));
+    });
   };
   onLinkMatchHandler = () => {
-    let startState = JSON.parse(localStorage.getItem('startState'));
-    let startLine = JSON.parse(localStorage.getItem('StartLine'));
-    this.setState((state) => ({
-      changingState: { ...startState,players:startLine },
-    }));
+    let startState = {...JSON.parse(localStorage.getItem('startState'))};
+    let startLine = [...JSON.parse(localStorage.getItem('StartLine'))];
+    let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
+    this.setState({
+      changingState: {...startState, players:[...startLine],playersPosition:[...playersPosition] },
+    });
   };
   clearStartLine = () => {
     this.setState((state) => ({
@@ -306,10 +286,31 @@ class App extends Component {
     }
   };
   saveStartline = () => {
-    let startLine = this.state.changingState.players ;
+    let startLine = [...this.state.changingState.players];
     localStorage.setItem('StartLine', JSON.stringify(startLine));
     localStorage.setItem('Team', JSON.stringify(this.state.team));
   };
+  exampleHandler = () => {
+    this.setState({
+      changingState: { ...Allstar },
+    });
+  };
+  goalInputHandler = (e) => {
+    let name = e.target.name;
+    let partName = name.split('goal')[0];
+    let value = e.target.value;
+    this.setState((state) => ({
+      changingState: {
+        ...state.changingState,
+        [partName]: [state.changingState[partName][0], value],
+      },
+    }));
+  };
+  createPlayersList=(players)=>{
+      return (
+        <ol>{players}</ol>
+      )
+  }
   render() {
     const fullcontext = {
       state: this.state,
@@ -327,6 +328,8 @@ class App extends Component {
       deletePlayerhandler: this.deletePlayerhandler,
       clearStartLine: this.clearStartLine,
       saveStartline: this.saveStartline,
+      goalInputHandler: this.goalInputHandler,
+      createPlayersList:this.createPlayersList
     };
 
     return (
@@ -338,8 +341,11 @@ class App extends Component {
             ) : (
               <StartPage
                 createTeamHandler={this.createTeamHandler}
-                inputValue2={this.state.changingState.inputValue2}
+                inputValueStartPage={
+                  this.state.changingState.inputValueStartPage
+                }
                 createTeamInputHandler={this.createTeamInputHandler}
+                exampleHandler={this.exampleHandler}
               />
             )}
             <PitchBench state={this.state.changingState} />

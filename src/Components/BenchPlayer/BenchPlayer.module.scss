@@ -1,13 +1,14 @@
-.main{
-    text-align: center;
-    width:65px;
-    span{
-        display:inline-block;
-        font-weight: bolder;
-        background-color:rgba(152, 185, 20, 0.61);
-        border-radius: 20%;
-    }
-    .goals{
-        font-size: larger;
-    }
+$backgroundColor: rgba(152, 185, 20, 0.61);
+.main {
+  text-align: center;
+  width: 65px;
+  span {
+    display: inline-block;
+    font-weight: bolder;
+    background-color: $backgroundColor;
+    border-radius: 20%;
+  }
+  .goals {
+    font-size: larger;
+  }
 }
