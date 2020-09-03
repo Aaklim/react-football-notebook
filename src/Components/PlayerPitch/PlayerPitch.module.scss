@@ -1,16 +1,22 @@
 .main {
-  width: 100px;
+  width: 120px;
   display: inline-block;
   position: absolute;
   text-align: center;
-  font-size: larger;
-  font-weight: bolder;
+  font-weight:bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+
   img {
     height: 50px;
   }
+  .name{
+    width:120px;
+    overflow-x:hidden;
+    text-align: center;
+  }
 }
 .RF {
-  left: 180px;
+  left: 160px;
   top: 70px;
 }
 .LF {
@@ -22,10 +28,10 @@
   top: 250px;
 }
 .RD {
-  left: 180px;
+  left: 160px;
   top: 250px;
 }
 .GK {
   top: 350px;
-  left: 100px;
+  left: 90px;
 }

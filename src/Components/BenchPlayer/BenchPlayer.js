@@ -4,7 +4,7 @@ import classes from './BenchPlayer.module.scss';
 const BenchPlayer = ({ name, state }) => {
   return (
     <div className={classes.main}>
-      <span>{name}</span>
+      <span className={classes.name}>{name}</span>
       <br />
       <img src='benchplayer.png' alt='Player' />
       <br />

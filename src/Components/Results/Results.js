@@ -10,18 +10,21 @@ const Results = () => {
   const games = context.state.gamesList;
   return (
     <div className={classes.main}>
-      <form action='' onSubmit={setResultFromLocalStorage}>
-        <select name='results' id=''>
-          {games}
-        </select>
-
-        <button className={classes.buttonChoice}>Выбрать</button>
-        <Link to='/'>
-          <button type='button' onClick={clearHandler}>
-            Очистить историю
-          </button>
-        </Link>
-      </form>
+      {games.length > 0 ? (
+        <form action='' onSubmit={setResultFromLocalStorage}>
+          <select name='results' id=''>
+            {games}
+          </select>
+          <button className={classes.buttonChoice}>Выбрать</button>
+        </form>
+      ) : (
+        <div className={classes.noresult}>Нет сохраненных результатов</div>
+      )}
+      <Link to='/'>
+        <button type='button' onClick={clearHandler}>
+        {games.length > 0 ? <span>Очистить историю</span> : <span>Cменить команду</span>}
+        </button>
+      </Link>
     </div>
   );
 };

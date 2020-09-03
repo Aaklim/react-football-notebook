@@ -3,7 +3,15 @@
   height: 200px;
   margin: 0 auto;
   text-align: center;
-  .example {
-    margin-top: 20px;
+  .title{
+    margin:20px 5px;
+    font-size:24px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
   }
+  button {
+    margin-top:10px;
+    font-weight: bolder;
+  }
+
 }

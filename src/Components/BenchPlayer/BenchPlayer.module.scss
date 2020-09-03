@@ -2,7 +2,7 @@ $backgroundColor: rgba(152, 185, 20, 0.61);
 .main {
   text-align: center;
   width: 65px;
-  span {
+  .name {
     display: inline-block;
     font-weight: bolder;
     background-color: $backgroundColor;
@@ -10,5 +10,7 @@ $backgroundColor: rgba(152, 185, 20, 0.61);
   }
   .goals {
     font-size: larger;
+    font-weight: bolder;
+    background-color: $backgroundColor;
   }
 }

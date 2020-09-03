@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './StartPage.module.scss';
-
 const StartPage = ({
   createTeamHandler,
   inputValue2,
@@ -9,7 +8,7 @@ const StartPage = ({
 }) => {
   return (
     <div className={classes.main}>
-      <h1>Введите название команды</h1>
+      <div className={classes.title}>Введите название команды</div>
       <form action='createTeam' autoComplete='on' onSubmit={createTeamHandler}>
         <input
           type='text'

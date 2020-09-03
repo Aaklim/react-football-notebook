@@ -9,7 +9,7 @@ const PitchBench = (props) => {
   const subPlayers = [];
 
   namePosition.forEach((obj) => {
-    if (/SUB/.test(obj.position)) {
+    if (/ЗАМ/.test(obj.position)) {
       subPlayers.push(obj);
     } else {
       pitchPlayers.push(obj);

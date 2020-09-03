@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext,useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import classes from './CreatePlayer.module.scss';
 import { Context } from '../../../App';
 import Results from '../../../Components/Results/Results';
+import ModalWindow from '../../../Components/ModalWindow/ModalWindow';
 
 const CreatePlayer = () => {
   const context = useContext(Context);
@@ -36,25 +37,23 @@ const CreatePlayer = () => {
         </nav>
         <Switch>
           <Route exact path='/'>
-            <h1>{context.state.team}</h1>
+            <div className={classes.teamName}>{context.state.team}</div>
             <form
-              action=''
               name='createPlayerForm'
               autoComplete='on'
               onSubmit={context.buttonHandler}
             >
-              <span>{playerNameControl ? 'Ошибка имени!!!' : null}</span>
-              <span>
+              <div className={classes.message}>{playerNameControl ? 'Ошибка имени!!!' : null}</div>
+              <div className={classes.message}>
                 {playerNameControlLength ? 'Максимальная длинна!!!' : null}
-              </span>
+              </div>
+              <div className={classes.message}>
+              {playersCounter?null:'Макс кол-во 9 игроков'}
+              </div>
               <input
                 type='text'
                 value={playersCounter ? context.changingState.inputValue : ''}
-                placeholder={
-                  playersCounter
-                    ? 'Введите имя игрока'
-                    : 'Макс кол-во 9 игроков'
-                }
+                placeholder= {playersCounter?'Введите имя игрока':null}
                 onChange={context.inputHandler}
                 disabled={!playersCounter}
               />
@@ -68,6 +67,7 @@ const CreatePlayer = () => {
               Очистить состав
             </button>
             <button onClick={context.saveResult}>Сохранить результат</button>
+            <ModalWindow context={context}/>
           </Route>
           <Route path='/results' component={Results} />
         </Switch>
