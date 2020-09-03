@@ -87,7 +87,7 @@ class App extends Component {
         (item) => item === this.state.changingState.inputValue
       )
     ) {
-      if (this.state.changingState.players.length < 9) {
+      if (this.state.changingState.players.length < 9){
         this.setState((state) => ({
           changingState: {
             ...state.changingState,
@@ -96,11 +96,12 @@ class App extends Component {
               state.changingState.inputValue,
             ],
             inputValue: '',
+            playerNameControlLength:false
           },
         }));
       } else {
         this.setState((state) => ({
-          changingState: { ...state.changingState, playersCounter: false },
+          changingState: { ...state.changingState, playersCounter: false ,playerNameControlLength:false },
         }));
       }
     } else {
@@ -111,7 +112,7 @@ class App extends Component {
   };
   inputHandler = (e) => {
     let value = e.target.value;
-    value.length < 15
+    value.length <=15
       ? this.setState((state) => ({
           changingState: {
             ...state.changingState,

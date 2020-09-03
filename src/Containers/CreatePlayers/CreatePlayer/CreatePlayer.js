@@ -1,4 +1,4 @@
-import React, { useContext,useRef } from 'react';
+import React, { useContext} from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import classes from './CreatePlayer.module.scss';
 import { Context } from '../../../App';
