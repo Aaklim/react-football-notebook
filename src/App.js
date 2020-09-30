@@ -11,9 +11,9 @@ class App extends Component {
     gamesList: [],
     gamesFullstate: [Allstar],
     team: '',
-    modalWindowOpen:false,
-    errorResult:false,
-    errorTeam:false,
+    modalWindowOpen: false,
+    errorResult: false,
+    errorTeam: false,
     changingState: {
       saved: false,
       games: [],
@@ -33,8 +33,8 @@ class App extends Component {
       ],
       team: '',
       inputValueStartPage: '',
-      inputValueModalWindowOpponent:'',
-      inputValueModalWindowResult:'',
+      inputValueModalWindowOpponent: '',
+      inputValueModalWindowResult: '',
       date: [],
       result: '',
       opponent: '',
@@ -43,25 +43,29 @@ class App extends Component {
       playerNameControlLength: false,
     },
   };
-  componentWillMount(){
-    document.body.style.overflow='hidden';
+  componentWillMount() {
+    document.body.style.overflow = 'hidden';
   }
   componentDidMount() {
-
     if (!localStorage.getItem('APP2')) {
-      localStorage.setItem('APP1', JSON.stringify([]));
+      localStorage.setItem('APP2', JSON.stringify([]));
       localStorage.setItem('APP', JSON.stringify([]));
       localStorage.setItem('Team', JSON.stringify(''));
       localStorage.setItem('StartLine', JSON.stringify([]));
-      localStorage.setItem('playersPosition', JSON.stringify([...this.state.changingState.playersPosition]));
+      localStorage.setItem(
+        'playersPosition',
+        JSON.stringify([...this.state.changingState.playersPosition])
+      );
       localStorage.setItem(
         'startState',
-        JSON.stringify({...this.state.changingState})
+        JSON.stringify({ ...this.state.changingState })
       );
     } else {
       let results = [...JSON.parse(localStorage.getItem('APP'))];
-      let startLine =[...JSON.parse(localStorage.getItem('StartLine'))];
-      let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
+      let startLine = [...JSON.parse(localStorage.getItem('StartLine'))];
+      let playersPosition = [
+        ...JSON.parse(localStorage.getItem('playersPosition')),
+      ];
       let matches = results.map((item, index) => (
         <option key={index} value={index}>
           {item.dateNow}
@@ -69,14 +73,18 @@ class App extends Component {
       ));
       this.setState({
         team: JSON.parse(localStorage.getItem('Team')),
-        gamesList:[...matches],
+        gamesList: [...matches],
         gamesFullstate: [...results],
-        changingState: { ...this.state.changingState, players:[...startLine],playersPosition:[...playersPosition] },
+        changingState: {
+          ...this.state.changingState,
+          players: [...startLine],
+          playersPosition: [...playersPosition],
+        },
       });
     }
   }
-  componentWillUnmount(){
-    document.body.style.overflow='visible';
+  componentWillUnmount() {
+    document.body.style.overflow = 'visible';
   }
   buttonHandler = (e) => {
     e.preventDefault();
@@ -87,7 +95,7 @@ class App extends Component {
         (item) => item === this.state.changingState.inputValue
       )
     ) {
-      if (this.state.changingState.players.length < 9){
+      if (this.state.changingState.players.length < 9) {
         this.setState((state) => ({
           changingState: {
             ...state.changingState,
@@ -96,12 +104,16 @@ class App extends Component {
               state.changingState.inputValue,
             ],
             inputValue: '',
-            playerNameControlLength:false
+            playerNameControlLength: false,
           },
         }));
       } else {
         this.setState((state) => ({
-          changingState: { ...state.changingState, playersCounter: false ,playerNameControlLength:false },
+          changingState: {
+            ...state.changingState,
+            playersCounter: false,
+            playerNameControlLength: false,
+          },
         }));
       }
     } else {
@@ -112,7 +124,7 @@ class App extends Component {
   };
   inputHandler = (e) => {
     let value = e.target.value;
-    value.length <=15
+    value.length <= 15
       ? this.setState((state) => ({
           changingState: {
             ...state.changingState,
@@ -134,7 +146,7 @@ class App extends Component {
     if (index !== -1) {
       array.splice(index, 1);
       this.setState((state) => ({
-        changingState: { ...state.changingState, playersPosition:[...array] },
+        changingState: { ...state.changingState, playersPosition: [...array] },
       }));
     }
   };
@@ -180,15 +192,14 @@ class App extends Component {
     });
   };
   saveResult = (e) => {
-    this.handleOpenModalWindow()
-
-};
+    this.handleOpenModalWindow();
+  };
   setResultFromLocalStorage = (e) => {
     e.preventDefault();
     let gameNumber = e.target.elements['results'].value;
-    let newstate={...this.state.gamesFullstate[gameNumber]}
+    let newstate = { ...this.state.gamesFullstate[gameNumber] };
     this.setState((state) => ({
-      changingState: {...newstate},
+      changingState: { ...newstate },
     }));
   };
   clearHandler = () => {
@@ -204,18 +215,23 @@ class App extends Component {
     });
   };
   onLinkMatchHandler = () => {
-    let startState = {...JSON.parse(localStorage.getItem('startState'))};
+    let startState = { ...JSON.parse(localStorage.getItem('startState')) };
     let startLine = [...JSON.parse(localStorage.getItem('StartLine'))];
-    let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
+    let playersPosition = [
+      ...JSON.parse(localStorage.getItem('playersPosition')),
+    ];
     this.setState({
-      changingState: {...startState, players:[...startLine],playersPosition:[...playersPosition] },
+      changingState: {
+        ...startState,
+        players: [...startLine],
+        playersPosition: [...playersPosition],
+      },
     });
   };
   clearStartLine = () => {
-    let startstate={...JSON.parse(localStorage.getItem('startState'))}
+    let startstate = { ...JSON.parse(localStorage.getItem('startState')) };
     this.setState((state) => ({
       changingState: { ...startstate },
-
     }));
   };
   deleteFromstate = (player, changingState) => {
@@ -291,88 +307,91 @@ class App extends Component {
       },
     }));
   };
-  createPlayersList=(players)=>{
-      return (
-        <ol>{players}</ol>
-      )
-  }
-  handleCloseModalWindow=()=>{
+  createPlayersList = (players) => {
+    return <ol>{players}</ol>;
+  };
+  handleCloseModalWindow = () => {
     this.setState((state) => ({
       modalWindowOpen: false,
       errorResult: false,
       errorTeam: false,
       changingState: {
         ...state.changingState,
-      inputValueModalWindowOpponent: '',
-      inputValueModalWindowResult: '',
+        inputValueModalWindowOpponent: '',
+        inputValueModalWindowResult: '',
       },
     }));
-  }
-  handleOpenModalWindow=()=>{
-    this.setState({modalWindowOpen:true})
-
-  }
-  valueTeamHandler=(e)=>{
-    let team=e.target.value;
-    this.setState(state=>({
-      errorTeam:false,
-      changingState:{...state.changingState,
-      inputValueModalWindowOpponent:team
-    }}))
-  }
-  valueResultHandler=(e)=>{
-    let result=e.target.value;
-    this.setState(state=>({
-      errorResult:false,
-      changingState:{...state.changingState,
-      inputValueModalWindowResult:result
-    }}))
-  }
-  handleSaveTeamResult=()=>{
-    let opponentTeam=this.state.changingState.inputValueModalWindowOpponent;
-    let matchResult=this.state.changingState.inputValueModalWindowResult;
-    if(!opponentTeam.trim().length>0){
+  };
+  handleOpenModalWindow = () => {
+    this.setState({ modalWindowOpen: true });
+  };
+  valueTeamHandler = (e) => {
+    let team = e.target.value;
+    this.setState((state) => ({
+      errorTeam: false,
+      changingState: {
+        ...state.changingState,
+        inputValueModalWindowOpponent: team,
+      },
+    }));
+  };
+  valueResultHandler = (e) => {
+    let result = e.target.value;
+    this.setState((state) => ({
+      errorResult: false,
+      changingState: {
+        ...state.changingState,
+        inputValueModalWindowResult: result,
+      },
+    }));
+  };
+  handleSaveTeamResult = () => {
+    let opponentTeam = this.state.changingState.inputValueModalWindowOpponent;
+    let matchResult = this.state.changingState.inputValueModalWindowResult;
+    if (!opponentTeam.trim().length > 0) {
       this.setState({
-        errorTeam:true
-      })} else if(!matchResult.trim().length>0){
-        this.setState({
-          errorResult:true
-      })} else{
-
-        let dateNow = new Date().toLocaleDateString();
-        localStorage.setItem('Team', JSON.stringify(this.state.team));
-        let playersPosition=[...JSON.parse(localStorage.getItem('playersPosition'))]
-        let copyState = {
-          dateNow,
-          ...this.state.changingState,
-          result: matchResult,
-          opponent: opponentTeam,
-          saved: true,
-          team: this.state.team,
-          playersPosition:[...playersPosition]
-        };
-        if (localStorage.getItem('APP')) {
-          let fullstate = [...JSON.parse(localStorage.getItem('APP'))];
-          let startLine =[...JSON.parse(localStorage.getItem('StartLine'))];
-          fullstate.push(copyState);
-          localStorage.setItem('APP', JSON.stringify(fullstate));
-          let startState = {...JSON.parse(localStorage.getItem('startState'))};
-          let results = [...JSON.parse(localStorage.getItem('APP'))];
-          let matches = results.map((item, index) => (
-            <option key={index} value={index}>
-              {item.dateNow}
-            </option>
-          ));
-          this.setState(state=>({
-            gamesFullstate:[...fullstate],
-            gamesList: [...matches],
-             modalWindowOpen:false,
-            changingState: { ...startState, players:[...startLine] },
-          }));
-        }
+        errorTeam: true,
+      });
+    } else if (!matchResult.trim().length > 0) {
+      this.setState({
+        errorResult: true,
+      });
+    } else {
+      let dateNow = new Date().toLocaleDateString();
+      localStorage.setItem('Team', JSON.stringify(this.state.team));
+      let playersPosition = [
+        ...JSON.parse(localStorage.getItem('playersPosition')),
+      ];
+      let copyState = {
+        dateNow,
+        ...this.state.changingState,
+        result: matchResult,
+        opponent: opponentTeam,
+        saved: true,
+        team: this.state.team,
+        playersPosition: [...playersPosition],
+      };
+      if (localStorage.getItem('APP')) {
+        let fullstate = [...JSON.parse(localStorage.getItem('APP'))];
+        let startLine = [...JSON.parse(localStorage.getItem('StartLine'))];
+        fullstate.push(copyState);
+        localStorage.setItem('APP', JSON.stringify(fullstate));
+        let startState = { ...JSON.parse(localStorage.getItem('startState')) };
+        let results = [...JSON.parse(localStorage.getItem('APP'))];
+        let matches = results.map((item, index) => (
+          <option key={index} value={index}>
+            {item.dateNow}
+          </option>
+        ));
+        this.setState((state) => ({
+          gamesFullstate: [...fullstate],
+          gamesList: [...matches],
+          modalWindowOpen: false,
+          changingState: { ...startState, players: [...startLine] },
+        }));
       }
-
-  }
+    }
+  };
   render() {
     const fullcontext = {
       state: this.state,
@@ -391,13 +410,12 @@ class App extends Component {
       clearStartLine: this.clearStartLine,
       saveStartline: this.saveStartline,
       goalInputHandler: this.goalInputHandler,
-      createPlayersList:this.createPlayersList,
-      handleCloseModalWindow:this.handleCloseModalWindow,
-      handleOpenModalWindow:this.handleOpenModalWindow,
-      valueTeamHandler:this.valueTeamHandler,
-      valueResultHandler:this.valueResultHandler,
-      handleSaveTeamResult:this.handleSaveTeamResult
-
+      createPlayersList: this.createPlayersList,
+      handleCloseModalWindow: this.handleCloseModalWindow,
+      handleOpenModalWindow: this.handleOpenModalWindow,
+      valueTeamHandler: this.valueTeamHandler,
+      valueResultHandler: this.valueResultHandler,
+      handleSaveTeamResult: this.handleSaveTeamResult,
     };
 
     return (
