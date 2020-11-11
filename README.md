@@ -1,6 +1,7 @@
 ## React-football-notebook
 This project allows you to create your own mini-football team, select starting lineup, add and remove players for each match, save the match result and player statistics
-(Этот проект позволяет создать свою мини-футбольную команду, заявлять состав,добавлять и удалять игроков на каждый матч, сохранять результат матча и статистику игроков)
+(Этот проект позволяет создать свою мини-футбольную команду, заявлять состав,добавлять и удалять игроков на каждый матч, сохранять результат матча и статистику игроков).
+Stack:React,React(hooks),Sass(SCSS).Data is stored in localStorage.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
